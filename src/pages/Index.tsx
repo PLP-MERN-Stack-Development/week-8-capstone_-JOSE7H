@@ -2,6 +2,7 @@ import { useState } from "react";
 import { EduSidebar } from "@/components/EduSidebar";
 import { TopNavbar } from "@/components/TopNavbar";
 import { Dashboard } from "@/components/Dashboard";
+import { Students } from "@/components/Students";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -11,12 +12,7 @@ const Index = () => {
       case "dashboard":
         return <Dashboard />;
       case "students":
-        return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Student Management</h1>
-            <p className="text-muted-foreground">Student management features coming soon...</p>
-          </div>
-        );
+        return <Students />;
       case "subjects":
         return (
           <div className="p-6">
