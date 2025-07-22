@@ -37,23 +37,30 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Sidebar */}
-      <EduSidebar 
-        activeSection={activeSection} 
-        onSectionChange={setActiveSection} 
-      />
-      
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Top Navbar */}
-        <TopNavbar currentTerm="Term 2" currentYear="2024" />
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <EduSidebar 
+          activeSection={activeSection} 
+          onSectionChange={setActiveSection} 
+        />
         
-        {/* Page Content */}
-        <main className="flex-1 overflow-auto">
-          {renderContent()}
-        </main>
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col">
+          {/* Top Navbar */}
+          <TopNavbar currentTerm="Term 2" currentYear="2024" />
+          
+          {/* Page Content */}
+          <main className="flex-1 overflow-auto">
+            {renderContent()}
+          </main>
+        </div>
       </div>
+      
+      {/* Footer */}
+      <footer className="bg-sidebar border-t border-sidebar-border text-sidebar-foreground text-center py-4 text-sm">
+        © 2024 EduTrack Results Management System. All rights reserved.
+      </footer>
     </div>
   );
 };
