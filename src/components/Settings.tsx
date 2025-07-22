@@ -265,127 +265,127 @@ export const Settings = () => {
 
         {/* User Management */}
         <TabsContent value="users">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5" />
-                User Management
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <Tabs defaultValue="permissions" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="permissions">Permissions</TabsTrigger>
-                  <TabsTrigger value="teachers">Teacher Management</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="permissions" className="space-y-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label>Allow Teachers to Edit Results</Label>
-                        <p className="text-sm text-muted-foreground">Teachers can modify student results</p>
-                      </div>
-                      <Switch
-                        checked={userManagement.allowTeacherEdit}
-                        onCheckedChange={(checked) => setUserManagement(prev => ({ ...prev, allowTeacherEdit: checked }))}
-                      />
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  User Permissions
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Allow Teachers to Edit Results</Label>
+                      <p className="text-sm text-muted-foreground">Teachers can modify student results</p>
                     </div>
-                    <Separator />
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label>Allow Bulk Data Import</Label>
-                        <p className="text-sm text-muted-foreground">Enable CSV/Excel import functionality</p>
-                      </div>
-                      <Switch
-                        checked={userManagement.allowBulkImport}
-                        onCheckedChange={(checked) => setUserManagement(prev => ({ ...prev, allowBulkImport: checked }))}
-                      />
-                    </div>
-                    <Separator />
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label>Require Admin Approval</Label>
-                        <p className="text-sm text-muted-foreground">All changes need admin approval</p>
-                      </div>
-                      <Switch
-                        checked={userManagement.requireApproval}
-                        onCheckedChange={(checked) => setUserManagement(prev => ({ ...prev, requireApproval: checked }))}
-                      />
-                    </div>
-                    <Separator />
-                    <div className="space-y-2">
-                      <Label>Session Timeout (minutes)</Label>
-                      <Input
-                        type="number"
-                        value={userManagement.sessionTimeout}
-                        onChange={(e) => setUserManagement(prev => ({ ...prev, sessionTimeout: parseInt(e.target.value) }))}
-                        className="w-32"
-                      />
-                    </div>
+                    <Switch
+                      checked={userManagement.allowTeacherEdit}
+                      onCheckedChange={(checked) => setUserManagement(prev => ({ ...prev, allowTeacherEdit: checked }))}
+                    />
                   </div>
-                  <Button onClick={() => handleSave("User Management")}>
-                    <Save className="w-4 h-4 mr-2" />
-                    Save User Settings
-                  </Button>
-                </TabsContent>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Allow Bulk Data Import</Label>
+                      <p className="text-sm text-muted-foreground">Enable CSV/Excel import functionality</p>
+                    </div>
+                    <Switch
+                      checked={userManagement.allowBulkImport}
+                      onCheckedChange={(checked) => setUserManagement(prev => ({ ...prev, allowBulkImport: checked }))}
+                    />
+                  </div>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Require Admin Approval</Label>
+                      <p className="text-sm text-muted-foreground">All changes need admin approval</p>
+                    </div>
+                    <Switch
+                      checked={userManagement.requireApproval}
+                      onCheckedChange={(checked) => setUserManagement(prev => ({ ...prev, requireApproval: checked }))}
+                    />
+                  </div>
+                  <Separator />
+                  <div className="space-y-2">
+                    <Label>Session Timeout (minutes)</Label>
+                    <Input
+                      type="number"
+                      value={userManagement.sessionTimeout}
+                      onChange={(e) => setUserManagement(prev => ({ ...prev, sessionTimeout: parseInt(e.target.value) }))}
+                      className="w-32"
+                    />
+                  </div>
+                </div>
+                <Button onClick={() => handleSave("User Management")}>
+                  <Save className="w-4 h-4 mr-2" />
+                  Save User Settings
+                </Button>
+              </CardContent>
+            </Card>
 
-                <TabsContent value="teachers" className="space-y-4">
-                  <div className="p-4 border rounded-lg bg-muted/50">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      Teacher Management
-                    </h4>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Full teacher management is available in the dedicated Teachers section. Click the button below to access it.
-                    </p>
-                    <Button 
-                      onClick={() => {
-                        // This would switch to teachers section
-                        toast({
-                          title: "Redirecting",
-                          description: "Navigate to Teachers section for full management capabilities.",
-                        });
-                      }}
-                      className="w-full"
-                    >
-                      <GraduationCap className="w-4 h-4 mr-2" />
-                      Manage Teachers
-                    </Button>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5" />
+                  Teacher Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="p-4 border rounded-lg bg-muted/50">
+                  <h4 className="font-semibold mb-3 flex items-center gap-2">
+                    <Users className="w-4 h-4" />
+                    Teacher Management
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Full teacher management is available in the dedicated Teachers section. Click the button below to access it.
+                  </p>
+                  <Button 
+                    onClick={() => {
+                      toast({
+                        title: "Redirecting",
+                        description: "Navigate to Teachers section for full management capabilities.",
+                      });
+                    }}
+                    className="w-full"
+                  >
+                    <GraduationCap className="w-4 h-4 mr-2" />
+                    Manage Teachers
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 border rounded-lg">
+                    <h5 className="font-medium mb-2">Quick Stats</h5>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Total Teachers:</span>
+                        <span className="font-semibold">15</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Active:</span>
+                        <span className="font-semibold text-green-600">14</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Departments:</span>
+                        <span className="font-semibold">5</span>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 border rounded-lg">
-                      <h5 className="font-medium mb-2">Quick Stats</h5>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span>Total Teachers:</span>
-                          <span className="font-semibold">15</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Active:</span>
-                          <span className="font-semibold text-green-600">14</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Departments:</span>
-                          <span className="font-semibold">5</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="p-4 border rounded-lg">
-                      <h5 className="font-medium mb-2">Recent Activity</h5>
-                      <div className="space-y-2 text-sm">
-                        <p className="text-muted-foreground">• New teacher added - Dr. Sarah Kimani</p>
-                        <p className="text-muted-foreground">• Subject assignment updated</p>
-                        <p className="text-muted-foreground">• Profile updated - Mr. John Ochieng</p>
-                      </div>
+                  <div className="p-4 border rounded-lg">
+                    <h5 className="font-medium mb-2">Recent Activity</h5>
+                    <div className="space-y-2 text-sm">
+                      <p className="text-muted-foreground">• New teacher added - Dr. Sarah Kimani</p>
+                      <p className="text-muted-foreground">• Subject assignment updated</p>
+                      <p className="text-muted-foreground">• Profile updated - Mr. John Ochieng</p>
                     </div>
                   </div>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         {/* Notifications */}
