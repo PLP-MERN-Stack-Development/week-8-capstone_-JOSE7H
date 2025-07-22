@@ -3,6 +3,10 @@ import { EduSidebar } from "@/components/EduSidebar";
 import { TopNavbar } from "@/components/TopNavbar";
 import { Dashboard } from "@/components/Dashboard";
 import { Students } from "@/components/Students";
+import { Subjects } from "@/components/Subjects";
+import { ResultsEntry } from "@/components/ResultsEntry";
+import { Analysis } from "@/components/Analysis";
+import { ReportCards } from "@/components/ReportCards";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -14,33 +18,13 @@ const Index = () => {
       case "students":
         return <Students />;
       case "subjects":
-        return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Subject Management</h1>
-            <p className="text-muted-foreground">Subject management features coming soon...</p>
-          </div>
-        );
+        return <Subjects />;
       case "results":
-        return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Results Entry</h1>
-            <p className="text-muted-foreground">Results entry features coming soon...</p>
-          </div>
-        );
+        return <ResultsEntry />;
       case "analysis":
-        return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Analytics</h1>
-            <p className="text-muted-foreground">Analytics features coming soon...</p>
-          </div>
-        );
+        return <Analysis />;
       case "reports":
-        return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Report Cards</h1>
-            <p className="text-muted-foreground">Report card generation coming soon...</p>
-          </div>
-        );
+        return <ReportCards />;
       case "settings":
         return (
           <div className="p-6">
