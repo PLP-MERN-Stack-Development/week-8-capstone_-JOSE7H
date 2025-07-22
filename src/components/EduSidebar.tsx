@@ -34,7 +34,7 @@ export function EduSidebar({ activeSection, onSectionChange }: EduSidebarProps) 
 
   return (
     <div className={cn(
-      "h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 flex flex-col",
+      "bg-sidebar border-r border-sidebar-border transition-all duration-300 flex flex-col",
       isCollapsed ? "w-16" : "w-64"
     )}>
       {/* Header */}

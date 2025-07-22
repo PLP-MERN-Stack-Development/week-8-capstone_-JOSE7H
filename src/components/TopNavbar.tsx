@@ -67,22 +67,22 @@ export const TopNavbar = ({ currentTerm, currentYear }: TopNavbarProps) => {
   };
 
   return (
-    <div className="h-16 border-b bg-card flex items-center justify-between px-6">
+    <div className="h-16 border-b bg-sidebar border-sidebar-border flex items-center justify-between px-6">
       {/* Left section - School info and term selector */}
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <School className="w-5 h-5 text-primary" />
+          <div className="p-2 bg-sidebar-accent/20 rounded-lg">
+            <School className="w-5 h-5 text-sidebar-accent" />
           </div>
           <div>
-            <h2 className="font-semibold text-foreground">Greenfield Secondary</h2>
-            <p className="text-xs text-muted-foreground">Student Results Management</p>
+            <h2 className="font-semibold text-sidebar-foreground">Greenfield Secondary</h2>
+            <p className="text-xs text-sidebar-foreground/70">Student Results Management</p>
           </div>
         </div>
         
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-muted-foreground" />
+            <Calendar className="w-4 h-4 text-sidebar-foreground/70" />
             <Select value={selectedTerm} onValueChange={handleTermChange}>
               <SelectTrigger className="w-32 h-8">
                 <SelectValue />
@@ -113,12 +113,12 @@ export const TopNavbar = ({ currentTerm, currentYear }: TopNavbarProps) => {
         {/* Quick Stats */}
         <div className="hidden md:flex items-center gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-muted-foreground" />
-            <span className="text-muted-foreground">420 Students</span>
+            <Users className="w-4 h-4 text-sidebar-foreground/70" />
+            <span className="text-sidebar-foreground/70">420 Students</span>
           </div>
           <div className="flex items-center gap-2">
-            <UserCheck className="w-4 h-4 text-muted-foreground" />
-            <span className="text-muted-foreground">15 Teachers</span>
+            <UserCheck className="w-4 h-4 text-sidebar-foreground/70" />
+            <span className="text-sidebar-foreground/70">15 Teachers</span>
           </div>
         </div>
 
@@ -169,18 +169,18 @@ export const TopNavbar = ({ currentTerm, currentYear }: TopNavbarProps) => {
             <Button variant="ghost" className="flex items-center gap-2 h-9">
               <Avatar className="w-7 h-7">
                 <AvatarImage src="/placeholder-avatar.jpg" alt="Admin" />
-                <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                <AvatarFallback className="bg-sidebar-accent text-sidebar-accent-foreground text-xs">
                   AD
                 </AvatarFallback>
               </Avatar>
               <div className="hidden md:flex flex-col items-start">
-                <span className="text-sm font-medium">Admin User</span>
+                <span className="text-sm font-medium text-sidebar-foreground">Admin User</span>
                 <div className="flex items-center gap-1">
-                  <Shield className="w-3 h-3 text-primary" />
-                  <span className="text-xs text-muted-foreground">Administrator</span>
+                  <Shield className="w-3 h-3 text-sidebar-accent" />
+                  <span className="text-xs text-sidebar-foreground/70">Administrator</span>
                 </div>
               </div>
-              <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              <ChevronDown className="w-4 h-4 text-sidebar-foreground/70" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
