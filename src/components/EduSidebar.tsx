@@ -21,6 +21,7 @@ interface EduSidebarProps {
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "students", label: "Students", icon: Users },
+  { id: "teachers", label: "Teachers", icon: GraduationCap },
   { id: "subjects", label: "Subjects", icon: BookOpen },
   { id: "results", label: "Results Entry", icon: ClipboardList },
   { id: "analysis", label: "Analytics", icon: BarChart3 },

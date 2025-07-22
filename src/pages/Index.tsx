@@ -8,6 +8,7 @@ import { ResultsEntry } from "@/components/ResultsEntry";
 import { Analysis } from "@/components/Analysis";
 import { ReportCards } from "@/components/ReportCards";
 import { Settings } from "@/components/Settings";
+import { Teachers } from "@/components/Teachers";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -26,6 +27,8 @@ const Index = () => {
         return <Analysis />;
       case "reports":
         return <ReportCards />;
+      case "teachers":
+        return <Teachers />;
       case "settings":
         return <Settings />;
       default:

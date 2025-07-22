@@ -239,25 +239,42 @@ export const ReportCards = () => {
                   </div>
                 </div>
 
-                {/* Academic Performance */}
+                 {/* Academic Performance Table */}
                 <div className="space-y-4">
                   <h4 className="font-semibold">Academic Performance</h4>
-                  <div className="space-y-2">
-                    {mockResults.map((result, index) => (
-                      <div key={index} className="grid grid-cols-7 gap-2 text-sm py-2 border-b">
-                        <div className="font-medium">{result.subject}</div>
-                        <div className="text-center">{result.cat1}</div>
-                        <div className="text-center">{result.cat2}</div>
-                        <div className="text-center">{result.midterm}</div>
-                        <div className="text-center">{result.endterm}</div>
-                        <div className="text-center font-semibold">{result.total}</div>
-                        <div className="text-center">
-                          <Badge variant={result.grade.includes("A") ? "default" : result.grade.includes("B") ? "secondary" : "outline"}>
-                            {result.grade}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="border rounded-lg overflow-hidden">
+                    <table className="w-full">
+                      <thead className="bg-muted/50">
+                        <tr>
+                          <th className="text-left p-3 font-medium">Subject</th>
+                          <th className="text-center p-3 font-medium">CAT 1</th>
+                          <th className="text-center p-3 font-medium">CAT 2</th>
+                          <th className="text-center p-3 font-medium">Mid-Term</th>
+                          <th className="text-center p-3 font-medium">End-Term</th>
+                          <th className="text-center p-3 font-medium">Total</th>
+                          <th className="text-center p-3 font-medium">Grade</th>
+                          <th className="text-center p-3 font-medium">Position</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {mockResults.map((result, index) => (
+                          <tr key={index} className="border-t hover:bg-muted/30">
+                            <td className="p-3 font-medium">{result.subject}</td>
+                            <td className="p-3 text-center">{result.cat1}</td>
+                            <td className="p-3 text-center">{result.cat2}</td>
+                            <td className="p-3 text-center">{result.midterm}</td>
+                            <td className="p-3 text-center">{result.endterm}</td>
+                            <td className="p-3 text-center font-semibold">{result.total}/400</td>
+                            <td className="p-3 text-center">
+                              <Badge variant={result.grade.includes("A") ? "default" : result.grade.includes("B") ? "secondary" : "outline"}>
+                                {result.grade}
+                              </Badge>
+                            </td>
+                            <td className="p-3 text-center">{result.position}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
 
