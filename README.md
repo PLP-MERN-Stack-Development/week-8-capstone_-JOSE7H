@@ -1,22 +1,15 @@
-# Welcome to your Lovable project
+# Welcome to my MERN project 
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/4f0a2fee-ab1d-476e-a432-0a5acd1226d4
+**LIVE URL**:https://preview--grade-track-analytics.lovable.app/
 
-## How can I edit this code?
+## YOU can I edit this code BY 
 
-There are several ways of editing your application.
 
-**Use Lovable**
+**your preferred IDE**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4f0a2fee-ab1d-476e-a432-0a5acd1226d4) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes. 
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -24,7 +17,7 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone <https://github.com/PLP-MERN-Stack-Development/week-8-capstone_-JOSE7H.git>
 
 # Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
@@ -62,15 +55,8 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/4f0a2fee-ab1d-476e-a432-0a5acd1226d4) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+ON Render, Vercel, or Netlify
+You can deploy this project using platforms like Render, Vercel, or Netlify. Follow the platform-specific instructions to connect your GitHub repository and deploy your application.
 
 # MERN Stack Capstone Project
 
@@ -90,7 +76,72 @@ You will:
 1. Accept the GitHub Classroom assignment
 2. Clone the repository to your local machine
 3. Follow the instructions in the `Week8-Assignment.md` file
-4. Plan, develop, and deploy your capstone project
+
+---
+
+# Week 8 Capstone Project Documentation
+
+## Overview
+This project is a classroom management system built with React, TypeScript, Vite, and Supabase. It provides dashboards, grade analysis, student and teacher management, and more.
+
+## Features
+- Dashboard with analytics
+- Student, teacher, and subject management
+- Grade distribution charts
+- Report cards and results entry
+- Authentication and settings
+
+## Technologies Used
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Supabase
+
+## Installation
+1. Clone the repository:
+   ```sh
+   git clone <repo-url>
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+## Project Structure
+```
+public/           # Static assets
+src/              # Source code
+  assets/         # Images and icons
+  components/     # UI and feature components
+  hooks/          # Custom React hooks
+  integrations/   # Supabase integration
+  lib/            # Utility functions
+  pages/          # Page components
+supabase/         # Supabase config and migrations
+```
+
+## Usage
+- Access the dashboard for analytics
+- Manage students, teachers, and subjects
+- Enter and view grades
+- Configure settings and user profiles
+
+## Contribution
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+Specify your license here (e.g., MIT)
+
+## Contact
+For support, contact the project maintainer.
 
 ## Files Included
 
