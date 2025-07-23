@@ -89,14 +89,16 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="flex flex-1">
-        {/* Sidebar */}
-        <EduSidebar 
-          activeSection={activeSection} 
-          onSectionChange={setActiveSection} 
-        />
+        {/* Sidebar - Fixed */}
+        <div className="fixed left-0 top-0 h-full z-40">
+          <EduSidebar 
+            activeSection={activeSection} 
+            onSectionChange={setActiveSection} 
+          />
+        </div>
         
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col">
+        {/* Main Content - Offset for fixed sidebar */}
+        <div className="flex-1 flex flex-col ml-64">
           {/* Top Navbar - Fixed/Sticky */}
           <div className="sticky top-0 z-50">
             <TopNavbar currentTerm="Term 2" currentYear="2024" onSectionChange={setActiveSection} />
@@ -109,8 +111,8 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Footer */}
-      <footer className="bg-sidebar border-t border-sidebar-border text-sidebar-foreground text-center py-4 text-sm">
+      {/* Footer - Offset for fixed sidebar */}
+      <footer className="bg-sidebar border-t border-sidebar-border text-sidebar-foreground text-center py-4 text-sm ml-64">
         © 2024 EduTrack Results Management System. All rights reserved.
       </footer>
     </div>
