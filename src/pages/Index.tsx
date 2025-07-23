@@ -97,8 +97,10 @@ const Index = () => {
         
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
-          {/* Top Navbar */}
-          <TopNavbar currentTerm="Term 2" currentYear="2024" onSectionChange={setActiveSection} />
+          {/* Top Navbar - Fixed/Sticky */}
+          <div className="sticky top-0 z-50">
+            <TopNavbar currentTerm="Term 2" currentYear="2024" onSectionChange={setActiveSection} />
+          </div>
           
           {/* Page Content */}
           <main className="flex-1 overflow-auto">
