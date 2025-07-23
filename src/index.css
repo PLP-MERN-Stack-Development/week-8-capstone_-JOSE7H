@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* EduTrack Design System - Professional Educational Interface */
+
+@layer base {
+  :root {
+    /* Light Black Theme */
+    --background: 0 0% 96%;
+    --foreground: 0 0% 15%;
+    
+    /* Primary Light Black Colors */
+    --primary: 0 0% 25%;
+    --primary-hover: 0 0% 20%;
+    --primary-light: 0 0% 85%;
+    --primary-dark: 0 0% 15%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary Colors */
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 25%;
+    --secondary-hover: 0 0% 88%;
+
+    /* Status Accent Colors */
+    --success: 142 76% 36%;
+    --success-light: 142 76% 90%;
+    --warning: 45 93% 47%;
+    --warning-light: 45 93% 90%;
+    --danger: 0 84% 60%;
+    --danger-light: 0 84% 90%;
+
+    /* Card & Surface Colors */
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 15%;
+    --card-border: 220 13% 91%;
+
+    /* Muted Colors */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 13% 46%;
+
+    /* Sidebar Colors */
+    --sidebar-background: 0 0% 18%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-accent: 0 0% 35%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 25%;
+
+    /* Interactive Elements */
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 25%;
+    --accent: 0 0% 95%;
+    --accent-foreground: 0 0% 30%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 25%), hsl(0 0% 15%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 30%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 98%));
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -2px hsl(0 0% 0% / 0.05);
+    --shadow-primary: 0 4px 14px 0 hsl(0 0% 25% / 0.15);
+
+    /* Spacing */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 92%;
+    
+    --primary: 0 0% 60%;
+    --primary-hover: 0 0% 65%;
+    --primary-foreground: 0 0% 8%;
+
+    --secondary: 220 20% 16%;
+    --secondary-foreground: 220 10% 85%;
+    --secondary-hover: 220 20% 20%;
+
+    --card: 220 30% 12%;
+    --card-foreground: 220 10% 92%;
+    --card-border: 220 20% 18%;
+
+    --muted: 220 20% 16%;
+    --muted-foreground: 220 10% 65%;
+
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-accent: 0 0% 50%;
+    --sidebar-border: 0 0% 12%;
+
+    --border: 220 20% 18%;
+    --input: 220 20% 18%;
+    --accent: 220 20% 16%;
+    --accent-foreground: 142 76% 50%;
+
+    --gradient-card: linear-gradient(145deg, hsl(220 30% 12%), hsl(220 20% 14%));
+    --shadow-sm: 0 1px 2px 0 hsl(220 30% 0% / 0.3);
+    --shadow-md: 0 4px 6px -1px hsl(220 30% 0% / 0.3), 0 2px 4px -1px hsl(220 30% 0% / 0.2);
+    --shadow-lg: 0 10px 15px -3px hsl(220 30% 0% / 0.3), 0 4px 6px -2px hsl(220 30% 0% / 0.2);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Educational UI Components */
+  .edu-card {
+    @apply bg-gradient-to-br from-white to-secondary/30 border border-card-border rounded-xl shadow-md hover:shadow-lg transition-all duration-200;
+  }
+
+  .edu-button-primary {
+    @apply bg-gradient-to-r from-primary to-primary-dark text-primary-foreground px-6 py-3 rounded-lg font-semibold shadow-green hover:shadow-lg transition-all duration-200 hover:scale-[1.02];
+  }
+
+  .edu-stat-card {
+    @apply edu-card p-6 hover:scale-[1.02] transition-transform duration-200;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
+  }
+
+  .sidebar-item-active {
+    @apply sidebar-item bg-sidebar-accent text-sidebar-accent-foreground font-semibold;
+  }
+
+  /* Chart Styles */
+  .chart-container {
+    @apply bg-white rounded-xl border border-card-border p-6 shadow-sm;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent;
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-sm border border-white/20;
+  }
+}
