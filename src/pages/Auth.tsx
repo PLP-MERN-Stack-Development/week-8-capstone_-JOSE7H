@@ -188,6 +188,10 @@ const Auth = () => {
               >
                 {loading ? "Creating account..." : "Create Account"}
               </Button>
+              
+              <div className="text-center text-sm text-muted-foreground">
+                <p>For testing: Use any email and password (min 6 chars)</p>
+              </div>
             </TabsContent>
           </Tabs>
         </CardContent>
