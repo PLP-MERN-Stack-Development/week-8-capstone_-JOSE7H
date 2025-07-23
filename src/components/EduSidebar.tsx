@@ -26,6 +26,7 @@ const menuItems = [
   { id: "results", label: "Results Entry", icon: ClipboardList },
   { id: "analysis", label: "Analytics", icon: BarChart3 },
   { id: "reports", label: "Report Cards", icon: FileText },
+  { id: "profile", label: "My Profile", icon: Users },
   { id: "settings", label: "Settings", icon: Settings },
 ];
 

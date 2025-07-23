@@ -9,6 +9,7 @@ import { ResultsEntry } from "@/components/ResultsEntry";
 import { Analysis } from "@/components/Analysis";
 import { ReportCards } from "@/components/ReportCards";
 import { Settings } from "@/components/Settings";
+import { Profile } from "@/components/Profile";
 import Teachers from "@/components/Teachers";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -76,6 +77,8 @@ const Index = () => {
         return <ReportCards />;
       case "teachers":
         return <Teachers />;
+      case "profile":
+        return <Profile />;
       case "settings":
         return <Settings />;
       default:
@@ -95,7 +98,7 @@ const Index = () => {
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
           {/* Top Navbar */}
-          <TopNavbar currentTerm="Term 2" currentYear="2024" />
+          <TopNavbar currentTerm="Term 2" currentYear="2024" onSectionChange={setActiveSection} />
           
           {/* Page Content */}
           <main className="flex-1 overflow-auto">

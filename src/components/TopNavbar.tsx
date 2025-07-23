@@ -30,9 +30,10 @@ import { useAuth } from "@/hooks/useAuth";
 interface TopNavbarProps {
   currentTerm: string;
   currentYear: string;
+  onSectionChange?: (section: string) => void;
 }
 
-export const TopNavbar = ({ currentTerm, currentYear }: TopNavbarProps) => {
+export const TopNavbar = ({ currentTerm, currentYear, onSectionChange }: TopNavbarProps) => {
   const { toast } = useToast();
   const { signOut, user } = useAuth();
   const [selectedTerm, setSelectedTerm] = useState(currentTerm);
@@ -194,11 +195,17 @@ export const TopNavbar = ({ currentTerm, currentYear }: TopNavbarProps) => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="flex items-center gap-2">
+            <DropdownMenuItem 
+              className="flex items-center gap-2"
+              onClick={() => onSectionChange?.('profile')}
+            >
               <User className="w-4 h-4" />
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-2">
+            <DropdownMenuItem 
+              className="flex items-center gap-2"
+              onClick={() => onSectionChange?.('settings')}
+            >
               <Settings className="w-4 h-4" />
               Settings
             </DropdownMenuItem>

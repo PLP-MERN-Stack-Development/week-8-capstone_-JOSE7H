@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { 
   Users, 
   BookOpen, 
@@ -10,36 +11,100 @@ import {
 } from "lucide-react";
 import { DashboardCard } from "./DashboardCard";
 import { SimpleGradeChart } from "./SimpleGradeChart";
+import { supabase } from "@/integrations/supabase/client";
 
 export function Dashboard() {
-  const stats = [
+  const [stats, setStats] = useState({
+    totalStudents: 0,
+    totalTeachers: 0,
+    totalSubjects: 0,
+    totalClasses: 0,
+    activeStudents: 0,
+    activeTeachers: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      // Fetch students count
+      const { count: studentsCount } = await supabase
+        .from('students')
+        .select('*', { count: 'exact', head: true });
+
+      // Fetch active students count
+      const { count: activeStudentsCount } = await supabase
+        .from('students')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active');
+
+      // Fetch teachers count  
+      const { count: teachersCount } = await supabase
+        .from('teachers')
+        .select('*', { count: 'exact', head: true });
+
+      // Fetch active teachers count
+      const { count: activeTeachersCount } = await supabase
+        .from('teachers')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active');
+
+      // Fetch subjects count
+      const { count: subjectsCount } = await supabase
+        .from('subjects')
+        .select('*', { count: 'exact', head: true });
+
+      // Fetch classes count
+      const { count: classesCount } = await supabase
+        .from('classes')
+        .select('*', { count: 'exact', head: true });
+
+      setStats({
+        totalStudents: studentsCount || 0,
+        totalTeachers: teachersCount || 0,
+        totalSubjects: subjectsCount || 0,
+        totalClasses: classesCount || 0,
+        activeStudents: activeStudentsCount || 0,
+        activeTeachers: activeTeachersCount || 0
+      });
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const dashboardStats = [
     {
       title: "Total Students",
-      value: "1,245",
-      subtitle: "Active this term",
+      value: loading ? "..." : stats.totalStudents.toString(),
+      subtitle: `${stats.activeStudents} active`,
       icon: Users,
       trend: { value: 8, isPositive: true },
       gradient: "primary" as const
     },
     {
-      title: "Average Grade",
-      value: "B+",
-      subtitle: "68.5% overall",
+      title: "Total Teachers", 
+      value: loading ? "..." : stats.totalTeachers.toString(),
+      subtitle: `${stats.activeTeachers} active`,
       icon: Award,
       trend: { value: 3, isPositive: true },
       gradient: "success" as const
     },
     {
       title: "Subjects Taught",
-      value: "24",
+      value: loading ? "..." : stats.totalSubjects.toString(),
       subtitle: "Across all forms",
       icon: BookOpen,
       gradient: "warning" as const
     },
     {
-      title: "Pass Rate",
-      value: "84.2%",
-      subtitle: "Above 40 marks",
+      title: "Total Classes",
+      value: loading ? "..." : stats.totalClasses.toString(),
+      subtitle: "All class levels",
       icon: Target,
       trend: { value: 2, isPositive: true },
       gradient: "success" as const
@@ -98,7 +163,7 @@ export function Dashboard() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-        {stats.map((stat, index) => (
+        {dashboardStats.map((stat, index) => (
           <DashboardCard
             key={index}
             title={stat.title}
