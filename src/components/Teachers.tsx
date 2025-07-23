@@ -88,7 +88,7 @@ const Teachers = () => {
     const matchesSearch = teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          teacher.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          teacher.employee_id.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDepartment = !selectedDepartment || teacher.department === selectedDepartment;
+    const matchesDepartment = !selectedDepartment || selectedDepartment === "all" || teacher.department === selectedDepartment;
     return matchesSearch && matchesDepartment;
   });
 
@@ -395,7 +395,7 @@ const Teachers = () => {
                 <SelectValue placeholder="All Departments" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Departments</SelectItem>
+                <SelectItem value="all">All Departments</SelectItem>
                 {departments.map((dept) => (
                   <SelectItem key={dept} value={dept}>{dept}</SelectItem>
                 ))}
