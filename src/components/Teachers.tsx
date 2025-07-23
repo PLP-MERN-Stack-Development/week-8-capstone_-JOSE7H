@@ -40,7 +40,7 @@ interface Teacher {
   status: "active" | "inactive";
 }
 
-export const Teachers = () => {
+const Teachers = () => {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -580,3 +580,5 @@ export const Teachers = () => {
     </div>
   );
 };
+
+export default Teachers;
