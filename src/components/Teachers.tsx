@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +9,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   UserPlus, 
   Search, 
@@ -29,19 +29,19 @@ interface Teacher {
   id: string;
   name: string;
   email: string;
-  phone: string;
-  employeeId: string;
+  phone: string | null;
+  employee_id: string;
   department: string;
-  subjects: string[];
-  classes: string[];
-  joinDate: string;
-  qualification: string;
+  qualification: string | null;
   experience: number;
+  join_date: string;
   status: "active" | "inactive";
 }
 
 const Teachers = () => {
   const { toast } = useToast();
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -51,136 +51,148 @@ const Teachers = () => {
     name: "",
     email: "",
     phone: "",
-    employeeId: "",
+    employee_id: "",
     department: "",
-    subjects: [],
-    classes: [],
     qualification: "",
     experience: 0
   });
 
-  // Mock data
-  const [teachers, setTeachers] = useState<Teacher[]>([
-    {
-      id: "1",
-      name: "Dr. Sarah Kimani",
-      email: "s.kimani@greenfield.ac.ke",
-      phone: "+254 701 234 567",
-      employeeId: "EMP001",
-      department: "Mathematics",
-      subjects: ["Mathematics", "Physics"],
-      classes: ["Form 1A", "Form 2A"],
-      joinDate: "2020-01-15",
-      qualification: "PhD Mathematics",
-      experience: 8,
-      status: "active"
-    },
-    {
-      id: "2",
-      name: "Mr. John Ochieng",
-      email: "j.ochieng@greenfield.ac.ke",
-      phone: "+254 702 345 678",
-      employeeId: "EMP002",
-      department: "Languages",
-      subjects: ["English", "Literature"],
-      classes: ["Form 1B", "Form 3A"],
-      joinDate: "2019-08-20",
-      qualification: "Masters in English",
-      experience: 12,
-      status: "active"
-    },
-    {
-      id: "3",
-      name: "Mrs. Grace Wanjiku",
-      email: "g.wanjiku@greenfield.ac.ke",
-      phone: "+254 703 456 789",
-      employeeId: "EMP003",
-      department: "Sciences",
-      subjects: ["Biology", "Chemistry"],
-      classes: ["Form 2B", "Form 4A"],
-      joinDate: "2021-03-10",
-      qualification: "Masters in Biology",
-      experience: 6,
-      status: "active"
-    },
-    {
-      id: "4",
-      name: "Mr. Peter Mutua",
-      email: "p.mutua@greenfield.ac.ke",
-      phone: "+254 704 567 890",
-      employeeId: "EMP004",
-      department: "Humanities",
-      subjects: ["History", "Geography"],
-      classes: ["Form 1A", "Form 3B"],
-      joinDate: "2018-07-01",
-      qualification: "Bachelors in History",
-      experience: 15,
-      status: "inactive"
-    }
-  ]);
-
   const departments = ["Mathematics", "Sciences", "Languages", "Humanities", "Technical"];
-  const subjects = ["Mathematics", "Physics", "Biology", "Chemistry", "English", "Kiswahili", "History", "Geography"];
-  const classes = ["Form 1A", "Form 1B", "Form 2A", "Form 2B", "Form 3A", "Form 3B", "Form 4A", "Form 4B"];
+
+  useEffect(() => {
+    fetchTeachers();
+  }, []);
+
+  const fetchTeachers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('teachers')
+        .select('*')
+        .order('name');
+
+      if (error) throw error;
+      setTeachers((data || []) as Teacher[]);
+    } catch (error) {
+      console.error('Error fetching teachers:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load teachers. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredTeachers = teachers.filter(teacher => {
     const matchesSearch = teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          teacher.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         teacher.employeeId.toLowerCase().includes(searchTerm.toLowerCase());
+                         teacher.employee_id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDepartment = !selectedDepartment || teacher.department === selectedDepartment;
     return matchesSearch && matchesDepartment;
   });
 
-  const handleAddTeacher = () => {
-    const newTeacher: Teacher = {
-      id: Date.now().toString(),
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      employeeId: formData.employeeId,
-      department: formData.department,
-      subjects: formData.subjects,
-      classes: formData.classes,
-      joinDate: new Date().toISOString().split('T')[0],
-      qualification: formData.qualification,
-      experience: formData.experience,
-      status: "active"
-    };
+  const handleAddTeacher = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('teachers')
+        .insert([{
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || null,
+          employee_id: formData.employee_id,
+          department: formData.department,
+          qualification: formData.qualification || null,
+          experience: formData.experience,
+          status: "active"
+        }])
+        .select();
 
-    setTeachers([...teachers, newTeacher]);
-    setIsAddDialogOpen(false);
-    resetForm();
-    toast({
-      title: "Teacher Added",
-      description: `${formData.name} has been added successfully.`,
-    });
+      if (error) throw error;
+
+      if (data && data[0]) {
+        setTeachers([...teachers, data[0] as Teacher]);
+        setIsAddDialogOpen(false);
+        resetForm();
+        toast({
+          title: "Teacher Added",
+          description: `${formData.name} has been added successfully.`,
+        });
+      }
+    } catch (error) {
+      console.error('Error adding teacher:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add teacher. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleEditTeacher = () => {
+  const handleEditTeacher = async () => {
     if (!selectedTeacher) return;
 
-    const updatedTeachers = teachers.map(teacher => 
-      teacher.id === selectedTeacher.id 
-        ? { ...teacher, ...formData }
-        : teacher
-    );
-    
-    setTeachers(updatedTeachers);
-    setIsEditDialogOpen(false);
-    setSelectedTeacher(null);
-    resetForm();
-    toast({
-      title: "Teacher Updated",
-      description: `${formData.name} has been updated successfully.`,
-    });
+    try {
+      const { data, error } = await supabase
+        .from('teachers')
+        .update({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || null,
+          employee_id: formData.employee_id,
+          department: formData.department,
+          qualification: formData.qualification || null,
+          experience: formData.experience
+        })
+        .eq('id', selectedTeacher.id)
+        .select();
+
+      if (error) throw error;
+
+      if (data && data[0]) {
+        setTeachers(teachers.map(teacher => 
+          teacher.id === selectedTeacher.id ? data[0] as Teacher : teacher
+        ));
+        setIsEditDialogOpen(false);
+        setSelectedTeacher(null);
+        resetForm();
+        toast({
+          title: "Teacher Updated",
+          description: `${formData.name} has been updated successfully.`,
+        });
+      }
+    } catch (error) {
+      console.error('Error updating teacher:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update teacher. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleDeleteTeacher = (teacherId: string) => {
-    setTeachers(teachers.filter(teacher => teacher.id !== teacherId));
-    toast({
-      title: "Teacher Removed",
-      description: "Teacher has been removed from the system.",
-    });
+  const handleDeleteTeacher = async (teacherId: string) => {
+    try {
+      const { error } = await supabase
+        .from('teachers')
+        .delete()
+        .eq('id', teacherId);
+
+      if (error) throw error;
+
+      setTeachers(teachers.filter(teacher => teacher.id !== teacherId));
+      toast({
+        title: "Teacher Removed",
+        description: "Teacher has been removed from the system.",
+      });
+    } catch (error) {
+      console.error('Error deleting teacher:', error);
+      toast({
+        title: "Error",
+        description: "Failed to remove teacher. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const resetForm = () => {
@@ -188,10 +200,8 @@ const Teachers = () => {
       name: "",
       email: "",
       phone: "",
-      employeeId: "",
+      employee_id: "",
       department: "",
-      subjects: [],
-      classes: [],
       qualification: "",
       experience: 0
     });
@@ -202,12 +212,10 @@ const Teachers = () => {
     setFormData({
       name: teacher.name,
       email: teacher.email,
-      phone: teacher.phone,
-      employeeId: teacher.employeeId,
+      phone: teacher.phone || "",
+      employee_id: teacher.employee_id,
       department: teacher.department,
-      subjects: teacher.subjects,
-      classes: teacher.classes,
-      qualification: teacher.qualification,
+      qualification: teacher.qualification || "",
       experience: teacher.experience
     });
     setIsEditDialogOpen(true);
@@ -216,6 +224,14 @@ const Teachers = () => {
   const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
+
+  if (loading) {
+    return (
+      <div className="p-6 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -246,11 +262,11 @@ const Teachers = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="employeeId">Employee ID</Label>
+                <Label htmlFor="employee_id">Employee ID</Label>
                 <Input
-                  id="employeeId"
-                  value={formData.employeeId}
-                  onChange={(e) => setFormData(prev => ({ ...prev, employeeId: e.target.value }))}
+                  id="employee_id"
+                  value={formData.employee_id}
+                  onChange={(e) => setFormData(prev => ({ ...prev, employee_id: e.target.value }))}
                   placeholder="EMP001"
                 />
               </div>
@@ -353,7 +369,7 @@ const Teachers = () => {
             <div>
               <p className="text-sm font-medium text-muted-foreground">Avg Experience</p>
               <p className="text-2xl font-bold">
-                {Math.round(teachers.reduce((sum, t) => sum + t.experience, 0) / teachers.length)} yrs
+                {teachers.length > 0 ? Math.round(teachers.reduce((sum, t) => sum + t.experience, 0) / teachers.length) : 0} yrs
               </p>
             </div>
             <Award className="h-8 w-8 text-muted-foreground" />
@@ -401,8 +417,7 @@ const Teachers = () => {
                 <TableHead>Teacher</TableHead>
                 <TableHead>Contact</TableHead>
                 <TableHead>Department</TableHead>
-                <TableHead>Subjects</TableHead>
-                <TableHead>Classes</TableHead>
+                <TableHead>Qualification</TableHead>
                 <TableHead>Experience</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Actions</TableHead>
@@ -419,7 +434,7 @@ const Teachers = () => {
                       </Avatar>
                       <div>
                         <div className="font-medium">{teacher.name}</div>
-                        <div className="text-sm text-muted-foreground">{teacher.employeeId}</div>
+                        <div className="text-sm text-muted-foreground">{teacher.employee_id}</div>
                       </div>
                     </div>
                   </TableCell>
@@ -429,42 +444,19 @@ const Teachers = () => {
                         <Mail className="h-3 w-3" />
                         {teacher.email}
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Phone className="h-3 w-3" />
-                        {teacher.phone}
-                      </div>
+                      {teacher.phone && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <Phone className="h-3 w-3" />
+                          {teacher.phone}
+                        </div>
+                      )}
                     </div>
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">{teacher.department}</Badge>
                   </TableCell>
                   <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {teacher.subjects.slice(0, 2).map((subject) => (
-                        <Badge key={subject} variant="outline" className="text-xs">
-                          {subject}
-                        </Badge>
-                      ))}
-                      {teacher.subjects.length > 2 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{teacher.subjects.length - 2}
-                        </Badge>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {teacher.classes.slice(0, 2).map((cls) => (
-                        <Badge key={cls} variant="outline" className="text-xs">
-                          {cls}
-                        </Badge>
-                      ))}
-                      {teacher.classes.length > 2 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{teacher.classes.length - 2}
-                        </Badge>
-                      )}
-                    </div>
+                    {teacher.qualification || 'Not specified'}
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
@@ -521,11 +513,11 @@ const Teachers = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-employeeId">Employee ID</Label>
+              <Label htmlFor="edit-employee_id">Employee ID</Label>
               <Input
-                id="edit-employeeId"
-                value={formData.employeeId}
-                onChange={(e) => setFormData(prev => ({ ...prev, employeeId: e.target.value }))}
+                id="edit-employee_id"
+                value={formData.employee_id}
+                onChange={(e) => setFormData(prev => ({ ...prev, employee_id: e.target.value }))}
               />
             </div>
             <div className="space-y-2">
@@ -564,6 +556,15 @@ const Teachers = () => {
                 id="edit-qualification"
                 value={formData.qualification}
                 onChange={(e) => setFormData(prev => ({ ...prev, qualification: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-experience">Years of Experience</Label>
+              <Input
+                id="edit-experience"
+                type="number"
+                value={formData.experience}
+                onChange={(e) => setFormData(prev => ({ ...prev, experience: parseInt(e.target.value) || 0 }))}
               />
             </div>
           </div>

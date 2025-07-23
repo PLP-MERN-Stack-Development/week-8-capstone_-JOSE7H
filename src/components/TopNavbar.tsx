@@ -25,6 +25,7 @@ import {
   Shield
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 interface TopNavbarProps {
   currentTerm: string;
@@ -33,6 +34,7 @@ interface TopNavbarProps {
 
 export const TopNavbar = ({ currentTerm, currentYear }: TopNavbarProps) => {
   const { toast } = useToast();
+  const { signOut, user } = useAuth();
   const [selectedTerm, setSelectedTerm] = useState(currentTerm);
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [notifications] = useState([
@@ -59,7 +61,8 @@ export const TopNavbar = ({ currentTerm, currentYear }: TopNavbarProps) => {
     });
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut();
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out.",
